@@ -1,0 +1,18 @@
+.flash-message {
+    color: white;
+    transition: 0.3s;
+    padding: 20px;
+    margin: 10px;
+}
+
+.alert {
+    background-color: #f44336;
+}
+
+.info {
+    background-color: #2196F3;
+}
+
+.success {
+    background-color: #4CAF50;
+}

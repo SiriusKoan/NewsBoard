@@ -1,0 +1,6 @@
+flask
+flask-login
+Flask-SQLAlchemy
+flask_cors
+flask_recaptcha
+pygal
