@@ -11,6 +11,7 @@ from flask_login import (
 import config
 from db import db
 from user_tools import login_auth, register
+from os import listdir
 
 app = Flask(__name__)
 app.config.from_object(config.Config)
@@ -19,14 +20,22 @@ recaptcha = ReCaptcha(app)
 login_manager = LoginManager(app)
 db.init_app(app)
 
+
 class User(UserMixin):
     pass
+
 
 @login_manager.user_loader
 def user_loader(username):
     user = User()
     user.id = username
     return user
+
+@app.before_first_request
+def db_check():
+    if 'data.db' not in listdir():
+        db.create_all()
+
 
 @app.route("/", methods=["GET", "POST"])
 def index():
@@ -35,6 +44,7 @@ def index():
     else:
         # TODO
         return render_template("index.html")
+
 
 @app.route("/login", methods=["GET", "POST"])
 def login_page():
@@ -51,11 +61,12 @@ def login_page():
                 user = User()
                 user.id = username
                 login_user(user)
-                flash("Login as %s"%username, category="success")
+                flash("Login as %s" % username, category="success")
                 return redirect(url_for("dashboard_page"))
             else:
                 flash("Login failed.", category="alert")
                 return redirect(url_for("login_page"))
+
 
 @app.route("/logout", methods=["GET"])
 def logout_page():
@@ -66,6 +77,7 @@ def logout_page():
     else:
         flash("You have not logined.", category="info")
         return redirect(url_for("login_page"))
+
 
 @app.route("/register", methods=["GET", "POST"])
 def register_page():
@@ -84,21 +96,28 @@ def register_page():
                     flash("Register successfully.", category="success")
                     return redirect(url_for("login_page"))
                 else:
-                    flash("Bad characters or the username has been used.", category="alert")
+                    flash("Bad characters or the username has been used.",
+                          category="alert")
                     return redirect(url_for("register_page"))
             else:
                 flash("Please click 'I am not a robot.'", category="alert")
                 return redirect(url_for("register_page"))
 
 
-@app.route("/dashboard", methods=["GET"])
+@app.route("/dashboard", methods=["GET", "POST"])
 def dashboard_page():
     if current_user.is_active:
-        # TODO
-        return render_template("dashboard.html")
+        if request.method == "GET":
+            # TODO
+            return render_template("dashboard.html")
+        if request.method == "POST":
+            keyword = request.form["keyword"]
+            # TODO
+            return redirect(url_for("dashboard_page"))
     else:
         flash("You have to login first.")
         return redirect(url_for("login_page"))
+
 
 if __name__ == "__main__":
     app.run(host="127.0.0.1", port=8080)
