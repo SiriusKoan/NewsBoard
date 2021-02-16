@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Caveat&display=swap" rel="stylesheet">
+    <title>NewsBoard</title>
+</head>
+
+<body>
+    <nav>
+        <ul>
+            <li class="item"><a href="/login">Login</a></li>
+            <li class="item"><a href="/register">Register</a></li>
+        </ul>
+    </nav>
+    <div id="main">
+        <p id="title">NewsBoard</p>
+        <div id="content">
+            <p>A news website that allows you to get what you want to know.</p>
+        </div>
+        <div><a href="/register" id="start-button">Get Started Now</a></div>
+    </div>
+</body>
+
+</html>
