@@ -26,7 +26,19 @@ class News(db.Model):
     ID = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.Text, nullable=False)
     keyword = db.Column(db.Text, nullable=False)
+    category = db.Column(db.Text, nullable=False)
 
-    def __init__(self, username, keyword):
+    def __init__(self, username, keyword, category):
         self.username = username
         self.keyword = keyword
+        self.category = category
+
+
+class Category(db.Model):
+    ID = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.Text, nullable=False)
+    name = db.Column(db.Text, nullable=False)
+
+    def __init__(self, username, name):
+        self.username = username
+        self.name = name
