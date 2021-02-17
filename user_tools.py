@@ -9,7 +9,7 @@ def login_auth(username, password):
         return hash_password == user.password
     return False
 
-def register(username, password, email):
+def register(username, password, email, lang):
     if (
         fullmatch("[a-zA-Z0-9_-]+", username)
         and Users.query.filter_by(username=username).first() is None
@@ -18,7 +18,9 @@ def register(username, password, email):
             username=username,
             password=sha256(bytes(password.encode("utf-8"))).hexdigest(),
             email=email,
+            lang=lang,
             verify_code=None,
+            status=None,
         )
         db.session.add(new_user)
         db.session.commit()

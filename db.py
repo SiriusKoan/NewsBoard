@@ -15,12 +15,13 @@ class Users(db.Model):
     status = db.Column(db.Text, nullable=True, default=None)
     # TODO add
 
-    def __init__(self, username, password, email, verify_code, lang):
+    def __init__(self, username, password, email, lang, verify_code, status):
         self.username = username
         self.password = password
         self.email = email
-        self.verify_code = verify_code
         self.lang = lang
+        self.verify_code = verify_code
+        self.status = status
 
 
 class News(db.Model):

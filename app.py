@@ -7,6 +7,7 @@ from flask_login import (
     login_user,
     current_user,
     logout_user,
+    login_required
 )
 import config
 from db import db
@@ -92,7 +93,8 @@ def register_page():
                 username = request.form["username"]
                 password = request.form["password"]
                 email = request.form["email"]
-                if register(username, password, email):
+                lang = request.form["language"]
+                if register(username, password, email, lang):
                     flash("Register successfully.", category="success")
                     return redirect(url_for("login_page"))
                 else:
@@ -104,20 +106,15 @@ def register_page():
                 return redirect(url_for("register_page"))
 
 
-@app.route("/dashboard", methods=["GET", "POST"])
+@app.route("/dashboard", methods=["GET"])
 def dashboard_page():
     if current_user.is_active:
         if request.method == "GET":
             # TODO
             return render_template("dashboard.html")
-        if request.method == "POST":
-            keyword = request.form["keyword"]
-            # TODO
-            return redirect(url_for("dashboard_page"))
     else:
         flash("You have to login first.")
         return redirect(url_for("login_page"))
-
 
 if __name__ == "__main__":
     app.run(host="127.0.0.1", port=8080)

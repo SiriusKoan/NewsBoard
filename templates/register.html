@@ -1,0 +1,42 @@
+{% from 'msg.jinja' import display_msg %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='messages.css') }}">
+    <script src="{{ url_for('static', filename='msg.js') }}"></script>
+    <title>Register</title>
+</head>
+
+<body>
+    <form action="/register" method="POST">
+        <div class="field">
+            <label for="username"><b class="normal">Username:</b></label>
+            <input type='text' name='username' id='username' placeholder='Username' required>
+        </div>
+        <div class="field">
+            <label for="password"><b class="normal">Password:</b></label>
+            <input type='password' name='password' id='password' placeholder='Password' required>
+        </div>
+        <div class="field">
+            <label for="email"><b class="normal">Email:</b></label>
+            <input type="email" name="email" id="email" placeholder="Email" required>
+        </div>
+        <div class="field">
+            <label for="language"><b>Language:</b></label>
+            <select name="language" id="language">
+                <option value="en">English</option>
+                <option value="zh-TW">Tranditional Chinese</option>
+            </select>
+        </div>
+        <div class="field">{{ recaptcha }}</div>
+        <input type='submit' name='submit' value="Register">
+    </form>
+    <div>{{ display_msg(messages) }}</div>
+</body>
+
+</html>
