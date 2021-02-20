@@ -18,8 +18,7 @@ class Google:
     def get_news(self, keyword, language):
         # language: zh-TW or en
         r = requests.get(
-            "https://www.google.com/search?q=%s&tbm=nws&lr=lang_%s&hl=%s"
-            % (keyword, language, language),
+            self.url % (keyword, language, language),
             headers=self.headers,
         )
         content = r.content.decode("utf-8")
@@ -61,8 +60,8 @@ class Google:
             piece["author_name"] = (author[author.index(")") + 1:]).replace("\n", "")
 
             self.news.append(piece)
+        return self.news
 
 
-# test
-print(get_news("nba", "zh-TW"))
-print(get_news("cat", "en"))
+search = Google()
+print(search.get_news('cat', 'en'))
