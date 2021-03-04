@@ -1,6 +1,6 @@
 from hashlib import sha256
 from re import fullmatch
-from db import db, Users
+from ..db import db, Users
 
 def login_auth(username, password):
     hash_password = sha256(bytes(password.encode("utf-8"))).hexdigest()
