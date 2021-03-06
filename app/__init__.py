@@ -1,4 +1,4 @@
-from flask import Blueprint, Flask
+from flask import Blueprint, Flask, g
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 from flask_login import LoginManager
@@ -13,7 +13,6 @@ def create_app(config):
     db.init_app(app)
     CORS(app)
     LoginManager().init_app(app)
-    recaptcha = ReCaptcha(app)
     
     from .main import main_bp
     app.register_blueprint(main_bp)

@@ -5,12 +5,11 @@ from flask_login import (
     login_required,
 )
 from flask_recaptcha import ReCaptcha
-from flask import current_app, request, render_template
+from flask import current_app, request, render_template, flash, redirect, url_for
 from .user_tools import login_auth, register
 from . import user_bp
 from ..db import db
 
-#recaptcha = ReCaptcha(current_app._get_current_object())
 
 @user_bp.route("/login", methods=["GET", "POST"])
 def login_page():
@@ -31,7 +30,7 @@ def login_page():
                 return redirect(url_for("dashboard_page"))
             else:
                 flash("Login failed.", category="alert")
-                return redirect(url_for("login_page"))
+                return redirect(url_for("user.login_page"))
 
 
 @user_bp.route("/logout", methods=["GET"])
@@ -58,11 +57,11 @@ def register_page():
                 lang = request.form["language"]
                 if register(username, password, email, lang):
                     flash("Register successfully.", category="success")
-                    return redirect(url_for("login_page"))
+                    return redirect(url_for("user.login_page"))
                 else:
                     flash("Bad characters or the username has been used.",
                           category="alert")
-                    return redirect(url_for("register_page"))
+                    return redirect(url_for("user.register_page"))
             else:
                 flash("Please click 'I am not a robot.'", category="alert")
-                return redirect(url_for("register_page"))
+                return redirect(url_for("user.register_page"))
