@@ -14,15 +14,16 @@
 
 <body>
     <form action="/login" method="POST">
+        {{ form.csrf_token }}
         <div class="field">
-            <label for="username"><b>Username:</b></label>
-            <input type='text' name='username' id='username' placeholder='Username' required>
+            {{ form.username.label }}
+            {{ form.username }}
         </div>
         <div class="field">
-            <label for="password"><b>Password:</b></label>
-            <input type='password' name='password' id='password' placeholder='Password' required>
+            {{ form.password.label }}
+            {{ form.password }}
         </div>
-        <input type='submit' name='submit' value="Login">
+        {{ form.submit }}
     </form>
     <div>{{ display_msg(messages) }}</div>
 </body>

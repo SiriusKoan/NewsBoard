@@ -14,27 +14,36 @@
 
 <body>
     <form action="/register" method="POST">
+        {{ form.csrf_token }}
         <div class="field">
-            <label for="username"><b class="normal">Username:</b></label>
-            <input type='text' name='username' id='username' placeholder='Username' required>
+            {{ form.username.label }}
+            {{ form.username }}
         </div>
         <div class="field">
-            <label for="password"><b class="normal">Password:</b></label>
-            <input type='password' name='password' id='password' placeholder='Password' required>
+            {{ form.password.label }}
+            {{ form.password }}
         </div>
         <div class="field">
-            <label for="email"><b class="normal">Email:</b></label>
-            <input type="email" name="email" id="email" placeholder="Email" required>
+            {{ form.repeat_password.label }}
+            {{ form.repeat_password }}
         </div>
         <div class="field">
+            {{ form.email.label }}
+            {{ form.email }}
+        </div>
+        <div class="field">
+            {{ form.language.label }}
+            {{ form.language }}
+            <!--
             <label for="language"><b>Language:</b></label>
             <select name="language" id="language">
                 <option value="en">English</option>
                 <option value="zh-TW">Tranditional Chinese</option>
             </select>
+            -->
         </div>
-        <div class="field">{{ recaptcha }}</div>
-        <input type='submit' name='submit' value="Register">
+        <div class="field">{{ form.recaptcha }}</div>
+        {{ form.submit }}
     </form>
     <div>{{ display_msg(messages) }}</div>
 </body>

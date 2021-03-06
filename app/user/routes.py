@@ -3,13 +3,21 @@ from flask_login import (
     current_user,
     logout_user,
     login_required,
+    UserMixin,
 )
 from flask_recaptcha import ReCaptcha
-from flask import current_app, request, render_template, flash, redirect, url_for
-from .user_tools import login_auth, register
+from flask import request, render_template, flash, redirect, url_for
+from .user_tools import login_auth, register, User
 from . import user_bp
+from .. import login_manager
 from ..db import db
+from ..forms import LoginForm, RegisterForm
 
+@login_manager.user_loader
+def load_user(username):
+    user = User()
+    user.id = username
+    return user
 
 @user_bp.route("/login", methods=["GET", "POST"])
 def login_page():
@@ -17,20 +25,25 @@ def login_page():
         flash("You have logined.", category="info")
         return redirect(url_for("dashboard_page"))
     else:
+        form = LoginForm()
         if request.method == "GET":
-            return render_template("login.html")
+            return render_template("login.html", form=form)
         if request.method == "POST":
-            username = request.form["username"]
-            password = request.form["password"]
-            if login_auth(username, password):
-                user = User()
-                user.id = username
-                login_user(user)
-                flash("Login as %s" % username, category="success")
-                return redirect(url_for("dashboard_page"))
+            if form.validate_on_submit():
+                username = form.username.data
+                password = form.password.data
+                if login_auth(username, password):
+                    user = User()
+                    user.id = username
+                    login_user(user)
+                    flash("Login as %s" % username, category="success")
+                    return redirect(url_for("main.index"))
+                    #return redirect(url_for("dashboard_page"))
+                else:
+                    flash("Login failed.", category="alert")
+                    return redirect(url_for("user.login_page"))
             else:
-                flash("Login failed.", category="alert")
-                return redirect(url_for("user.login_page"))
+                flash("Invalid.")
 
 
 @user_bp.route("/logout", methods=["GET"])
@@ -47,21 +60,23 @@ def register_page():
         flash("You have logined.", category="info")
         return redirect(url_for("dashboard_page"))
     else:
+        form = RegisterForm()
         if request.method == "GET":
-            return render_template("register.html")
+            return render_template("register.html", form=form)
         if request.method == "POST":
-            if recaptcha.verify():
-                username = request.form["username"]
-                password = request.form["password"]
-                email = request.form["email"]
-                lang = request.form["language"]
-                if register(username, password, email, lang):
+            if form.validate_on_submit():
+                username = form.username.data
+                password = form.password.data
+                email = form.email.data
+                language = form.language.data
+                if register(username, password, email, language):
                     flash("Register successfully.", category="success")
                     return redirect(url_for("user.login_page"))
                 else:
-                    flash("Bad characters or the username has been used.",
-                          category="alert")
+                    flash("The name has been used.", category="alert")
                     return redirect(url_for("user.register_page"))
             else:
-                flash("Please click 'I am not a robot.'", category="alert")
+                for _, errors in form.errors.items():
+                    for error in errors:
+                        flash(error, category="alert")
                 return redirect(url_for("user.register_page"))

@@ -10,7 +10,6 @@ class Users(db.Model):
     password = db.Column(db.Text, nullable=False)
     email = db.Column(db.Text, unique=True, nullable=False)
     lang = db.Column(db.Text, nullable=False, default="en")
-    public = db.Column(db.Boolean, nullable=False, default=False)
     # for verification
     verify_code = db.Column(db.Text, unique=True, nullable=True)
     status = db.Column(db.Text, nullable=True, default=None)
@@ -40,6 +39,7 @@ class Category(db.Model):
     ID = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.Text, nullable=False)
     name = db.Column(db.Text, nullable=False)
+    public = db.Column(db.Boolean, nullable=False, default=False)
 
     def __init__(self, username, name):
         self.username = username

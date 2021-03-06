@@ -1,6 +1,10 @@
 from hashlib import sha256
 from re import fullmatch
 from ..db import db, Users
+from flask_login import UserMixin
+
+class User(UserMixin):
+    pass
 
 def login_auth(username, password):
     hash_password = sha256(bytes(password.encode("utf-8"))).hexdigest()
@@ -10,10 +14,7 @@ def login_auth(username, password):
     return False
 
 def register(username, password, email, lang):
-    if (
-        fullmatch("[a-zA-Z0-9_-]+", username)
-        and Users.query.filter_by(username=username).first() is None
-    ):
+    if Users.query.filter_by(username=username).first() is None:
         new_user = Users(
             username=username,
             password=sha256(bytes(password.encode("utf-8"))).hexdigest(),
