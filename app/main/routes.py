@@ -12,6 +12,6 @@ def db_check():
 @main_bp.route("/", methods=["GET", "POST"])
 def index():
     if current_user.is_active:
-        return redirect(url_for("user.dashboard_page"))
+        return redirect(url_for("dashboard.dashboard_page"))
     else:
         return render_template("index.html")

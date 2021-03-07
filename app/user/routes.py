@@ -23,7 +23,7 @@ def load_user(username):
 def login_page():
     if current_user.is_active:
         flash("You have logined.", category="info")
-        return redirect(url_for("dashboard_page"))
+        return redirect(url_for("dashboard.dashboard_page"))
     else:
         form = LoginForm()
         if request.method == "GET":
@@ -37,8 +37,7 @@ def login_page():
                     user.id = username
                     login_user(user)
                     flash("Login as %s" % username, category="success")
-                    return redirect(url_for("main.index"))
-                    #return redirect(url_for("dashboard_page"))
+                    return redirect(url_for("dashboard.dashboard_page"))
                 else:
                     flash("Login failed.", category="alert")
                     return redirect(url_for("user.login_page"))
@@ -50,15 +49,14 @@ def login_page():
 @login_required
 def logout_page():
     logout_user()
-    flash("Logout.", category="info")
-    return redirect(url_for("index"))
+    return redirect(url_for("main.index"))
 
 
 @user_bp.route("/register", methods=["GET", "POST"])
 def register_page():
     if current_user.is_active:
         flash("You have logined.", category="info")
-        return redirect(url_for("dashboard_page"))
+        return redirect(url_for("dashboard.dashboard_page"))
     else:
         form = RegisterForm()
         if request.method == "GET":
