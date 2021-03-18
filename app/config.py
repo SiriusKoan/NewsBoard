@@ -2,7 +2,7 @@ from os import getenv
 
 class Config:
     DEBUG = True
-    SECRET_KEY = getenv("APP_SECRET_KEY")
+    SECRET_KEY = getenv("SECRET_KEY")
     ENV = "development"
     RECAPTCHA_ENABLED = True
     RECAPTCHA_PUBLIC_KEY = getenv("RECAPTCHA_PUBLIC_KEY")

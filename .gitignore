@@ -1,4 +1,8 @@
 .vscode/*
 __pycache__/*
+app/__pycache__/*
+app/dashboard/__pycache__/*
+app/main/__pycache__/*
+app/user/__pycache__/*
 .venv/*
 data.db
