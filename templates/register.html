@@ -1,18 +1,11 @@
+{% extends 'form_base.html' %}
 {% from 'msg.jinja' import display_msg %}
 
-<!DOCTYPE html>
-<html lang="en">
+{% block title %}Register{% endblock %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ url_for('static', filename='messages.css') }}">
-    <script src="{{ url_for('static', filename='msg.js') }}"></script>
-    <title>Register</title>
-</head>
-
-<body>
+{% block main_content %}
+<div class="container">
+    <div>{{ display_msg(messages) }}</div>
     <form action="/register" method="POST">
         {{ form.csrf_token }}
         <div class="field">
@@ -34,18 +27,12 @@
         <div class="field">
             {{ form.language.label }}
             {{ form.language }}
-            <!--
-            <label for="language"><b>Language:</b></label>
-            <select name="language" id="language">
-                <option value="en">English</option>
-                <option value="zh-TW">Tranditional Chinese</option>
-            </select>
-            -->
         </div>
         <div class="field">{{ form.recaptcha }}</div>
         {{ form.submit }}
+        <div id="links">
+            <a href="/login">Login</a>
+        </div>
     </form>
-    <div>{{ display_msg(messages) }}</div>
-</body>
-
-</html>
+</div>
+{% endblock %}

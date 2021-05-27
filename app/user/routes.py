@@ -5,7 +5,6 @@ from flask_login import (
     login_required,
     UserMixin,
 )
-from flask_recaptcha import ReCaptcha
 from flask import request, render_template, flash, redirect, url_for
 from .user_tools import login_auth, register, User
 from . import user_bp

@@ -1,18 +1,28 @@
 from os import getenv
 
+
 class Config:
-    DEBUG = True
     SECRET_KEY = getenv("SECRET_KEY")
-    ENV = "development"
-    RECAPTCHA_ENABLED = True
-    RECAPTCHA_PUBLIC_KEY = getenv("RECAPTCHA_PUBLIC_KEY")
-    RECAPTCHA_PRIVATE_KEY = getenv("RECAPTCHA_PRIVATE_KEY")
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SQLALCHEMY_DATABASE_URI = "sqlite:///../../data.db"
-    
-class DevelopmentConfig(Config):
-    pass
+
+
+class Testing(Config):
+    ENV = "TESTING"
+    TESTING = True
+
+
+class Development(Config):
+    ENV = "DEVELOPMENT"
+    DEBUG = True
+
+
+class Production(Config):
+    ENV = "PRODUCTION"
+
 
 config_list = {
-    'development': DevelopmentConfig,
+    "testing": Testing,
+    "development": Development,
+    "production": Production,
 }

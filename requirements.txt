@@ -1,8 +1,8 @@
-flask
+flask == 1.1.1
 flask-login
 Flask-SQLAlchemy
-flask_cors
-flask_recaptcha
+flask-wtf
+flask-script
 pygal
 lxml
 html2text

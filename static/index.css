@@ -3,25 +3,83 @@ html {
 }
 
 body {
-    width: 99%;
-    height: 100%;
-    background-image: linear-gradient(to left, #005aa7, #008cb7, #53b6b2, #b4dabb, #fffde4);
+    margin: 0;
+    width: 100vw;
+    height: 100vh;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    backdrop-filter: blur(5px);
+    animation: bg-blur;
+    animation-duration: 2s;
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+li {
+    float: right;
+    margin: 10px 20px 0 10px;
+}
+
+li a {
+    display: block;
+    background-color: #dddddd00;
+    text-decoration: none;
+    color: white;
+}
+
+li a:hover {
+    text-decoration: underline;
+    color: #cacaca;
+}
+
+/* for login page and register page */
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 80vh;
+}
+
+.container form {
+    padding: 12vh 12vw;
+    background-color: rgba(255, 255, 255, 0.3);
+    box-shadow: 10px 10px 16px 1px rgba(0, 0, 0, 0.2), 0 6px 20px 1px rgba(0, 0, 0, 0.19);
+    transition: 0.1s ease;
+}
+
+.container form:hover {
+    background-color: rgba(255, 255, 255, 0.4);
+}
+
+.container #links {
+    margin-top: 20px;
+}
+
+.container a {
+    text-decoration: none;
+    color: black;
+}
+
+.container a:hover {
+    text-decoration: underline;
 }
 
 #main {
     margin-left: 100px;
 }
 
-@media only screen and (max-width: 650px) {
-    #main {
-        margin-left: 40px;
-    }
-}
-
 #title {
     text-align: left;
     font-family: 'Caveat', cursive;
-    font-size: 5rem;
+    font-size: 4rem;
     color: white;
     text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
     margin: 1em 1em 0px 10px;
@@ -48,27 +106,18 @@ body {
     background-color: #01437e;
 }
 
-ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
+@media only screen and (max-width: 650px) {
+    #main {
+        margin-left: 40px;
+        margin-right: 20px;
+    }
 }
 
-.item {
-    float: right;
-}
-
-.item a {
-    display: block;
-    padding: 8px;
-    background-color: #dddddd00;
-    text-decoration: none;
-    color: white;
-    margin: 0.5em 2em 0 2em;
-}
-
-.item a:hover {
-    text-decoration: underline;
-    color: #cacaca;
+@keyframes bg-blur {
+    from {
+        backdrop-filter: blur(2px);
+    }
+    to {
+        backdrop-filter: blur(5px);
+    }
 }
