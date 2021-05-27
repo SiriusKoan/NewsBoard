@@ -8,6 +8,14 @@ body {
     height: 100vh;
     background-repeat: no-repeat;
     background-size: cover;
+}
+
+body#index {
+    background-position: bottom;
+    backdrop-filter: blur(1px) brightness(90%);
+}
+
+body.form {
     background-position: center;
     backdrop-filter: blur(5px);
     animation: bg-blur;
@@ -89,6 +97,7 @@ li a:hover {
     text-align: left;
     font-family: 'Caveat', cursive;
     font-size: 2rem;
+    color: white;
 }
 
 #start-button {

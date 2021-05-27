@@ -1,5 +1,5 @@
 input[type="text"], input[type="email"], input[type="password"] {
-    margin: 5px 10px 5px 10px;
+    margin: 5px 10px 5px 0;
     font-family: 'Noto Sans TC', sans-serif;
     background: #FFFFFF;
     color: black;

@@ -1,0 +1,17 @@
+{
+    "name": "NewsBoard",
+    "short_name": "NewBoard",
+    "background_color": "#ffffff",
+    "description": "A news website that allows you to get what you want to know.",
+    "display": "standalone",
+    "start_url": "/",
+    "theme_color": "#ffffff",
+    "scope": "/",
+    "icons": [
+        {
+            "src": "/static/icon.png",
+            "sizes": "300x300",
+            "type": "image/png"
+        }
+    ]
+}

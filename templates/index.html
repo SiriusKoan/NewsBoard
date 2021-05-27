@@ -5,13 +5,16 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}">
+    <meta name="theme-color" content="#FFFFFF">
+    <link rel="stylesheet" href="/static/index.css">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Caveat&display=swap" rel="stylesheet">
+    <link rel="manifest" href="/manifest.json">
+    <script src="/static/index.js"></script>
     <title>NewsBoard</title>
 </head>
 
-<body style="background-image: linear-gradient(to left, #005aa7, #008cb7, #53b6b2, #b4dabb, #fffde4);">
+<body style="background-image: url(/static/bg/index.jpg);" id="index">
     <nav>
         <ul>
             <li class="item"><a href="/login">Login</a></li>

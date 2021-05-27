@@ -4,7 +4,7 @@ from os import getenv
 class Config:
     SECRET_KEY = getenv("SECRET_KEY")
     SQLALCHEMY_TRACK_MODIFICATIONS = False
-    SQLALCHEMY_DATABASE_URI = "sqlite:///../../data.db"
+    SQLALCHEMY_DATABASE_URI = "sqlite:///data.db"
 
 
 class Testing(Config):

@@ -9,19 +9,15 @@
     <form action="/register" method="POST">
         {{ form.csrf_token }}
         <div class="field">
-            {{ form.username.label }}
             {{ form.username }}
         </div>
         <div class="field">
-            {{ form.password.label }}
             {{ form.password }}
         </div>
         <div class="field">
-            {{ form.repeat_password.label }}
             {{ form.repeat_password }}
         </div>
         <div class="field">
-            {{ form.email.label }}
             {{ form.email }}
         </div>
         <div class="field">

@@ -12,11 +12,13 @@ from .. import login_manager
 from ..db import db
 from ..forms import LoginForm, RegisterForm
 
+
 @login_manager.user_loader
 def load_user(username):
     user = User()
     user.id = username
     return user
+
 
 @user_bp.route("/login", methods=["GET", "POST"])
 def login_page():

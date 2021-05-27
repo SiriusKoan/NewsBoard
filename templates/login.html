@@ -9,11 +9,9 @@
     <form action="/login" method="POST">
         {{ form.csrf_token }}
         <div class="field">
-            {{ form.username.label }}
             {{ form.username }}
         </div>
         <div class="field">
-            {{ form.password.label }}
             {{ form.password }}
         </div>
         {{ form.submit }}

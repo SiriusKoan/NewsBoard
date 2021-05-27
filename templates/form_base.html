@@ -5,16 +5,18 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#FFFFFF">
     {% block link %}{% endblock %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='messages.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='inputs.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}">
+    <link rel="stylesheet" href="/static/index.css">
+    <link rel="stylesheet" href="/static/inputs.css">
+    <link rel="stylesheet" href="/static/messages.css">
     {% block script %}{% endblock %}
-    <script src="{{ url_for('static', filename='msg.js') }}"></script>
+    <script src="/static/index.js"></script>
+    <script src="/static/msg.js"></script>
     <title>{% block title %}{% endblock %}</title>
 </head>
 
-<body style="background-image: url({{ url_for('static', filename='bg.jpg') }});">
+<body style="background-image: url(/static/bg/form.jpg);" class="form">
     <main>
         {% block main_content %}
         {% endblock %}
