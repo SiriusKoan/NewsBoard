@@ -3,21 +3,11 @@ from flask_login import (
     current_user,
     logout_user,
     login_required,
-    UserMixin,
 )
 from flask import request, render_template, flash, redirect, url_for
-from .user_tools import login_auth, register, User
+from ..user_tools import login_auth, register
 from . import user_bp
-from .. import login_manager
-from ..db import db
 from ..forms import LoginForm, RegisterForm
-
-
-@login_manager.user_loader
-def load_user(username):
-    user = User()
-    user.id = username
-    return user
 
 
 @user_bp.route("/login", methods=["GET", "POST"])
@@ -33,9 +23,7 @@ def login_page():
             if form.validate_on_submit():
                 username = form.username.data
                 password = form.password.data
-                if login_auth(username, password):
-                    user = User()
-                    user.id = username
+                if user := login_auth(username, password):
                     login_user(user)
                     flash("Login as %s" % username, category="success")
                     return redirect(url_for("dashboard.dashboard_page"))

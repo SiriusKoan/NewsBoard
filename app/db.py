@@ -13,6 +13,7 @@ class Users(db.Model):
     # for verification
     verify_code = db.Column(db.Text, unique=True, nullable=True)
     status = db.Column(db.Text, nullable=True, default=None)
+    directories = db.relationship("Directories")
 
     def __init__(self, username, password, email, lang, verify_code, status):
         self.username = username
@@ -23,24 +24,24 @@ class Users(db.Model):
         self.status = status
 
 
-class News(db.Model):
+class Keywords(db.Model):
+    __tablename__ = "keywords"
     ID = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.Text, nullable=False)
     keyword = db.Column(db.Text, nullable=False)
-    category = db.Column(db.Text, nullable=False)
+    directory_id = db.Column(db.Integer, db.ForeignKey("directories.ID"), nullable=False)
 
-    def __init__(self, username, keyword, category):
-        self.username = username
+    def __init__(self, keyword, directory_id):
         self.keyword = keyword
-        self.category = category
+        self.directory_id = directory_id
 
 
-class Category(db.Model):
+class Directories(db.Model):
+    __tablename__ = "directories"
     ID = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.Text, nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey("users.ID"), nullable=False)
     name = db.Column(db.Text, nullable=False)
-    public = db.Column(db.Boolean, nullable=False, default=False)
+    keywords = db.relationship("Keywords")
 
-    def __init__(self, username, name):
-        self.username = username
+    def __init__(self, user_id, name):
+        self.user_id = user_id
         self.name = name

@@ -27,6 +27,7 @@ self.addEventListener('fetch', function (event) {
     event.respondWith(
         caches.match(event.request)
             .then(function (response) {
+                // TODO do not save login, index, register and so on
                 caches.open(offline).then(function (cache) { cache.add(event.request) });
                 if (response) {
                     return response;

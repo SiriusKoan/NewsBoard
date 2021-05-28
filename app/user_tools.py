@@ -1,18 +1,27 @@
 from hashlib import sha256
-from re import fullmatch
-from ..db import db, Users
 from flask_login import UserMixin
+from . import login_manager
+from .db import db, Users
 
 
 class User(UserMixin):
     pass
 
 
+@login_manager.user_loader
+def load_user(user_id):
+    user = User()
+    user.id = user_id
+    return user
+
+
 def login_auth(username, password):
     hash_password = sha256(bytes(password.encode("utf-8"))).hexdigest()
-    user = Users.query.filter_by(username=username).first()
-    if user:
-        return hash_password == user.password
+    if user := Users.query.filter_by(username=username).first():
+        if user.password == hash_password:
+            sessionUser = User()
+            sessionUser.id = user.ID
+            return sessionUser
     return False
 
 

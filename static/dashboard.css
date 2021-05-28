@@ -5,6 +5,7 @@ body {
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
+    background-attachment: fixed;
     backdrop-filter: brightness(80%) blur(4px);
 }
 
@@ -12,12 +13,14 @@ body {
     display: flex;
     justify-content: left;
     height: 100%;
+    flex-direction: column;
+    flex-wrap: wrap;
 }
 
 .container .directory {
     margin: 4px;
     padding: 2px;
-    flex: 1;
+    flex: 1 0 40%;
 }
 
 .container .directory:hover {

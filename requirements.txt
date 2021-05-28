@@ -4,5 +4,5 @@ Flask-SQLAlchemy
 flask-wtf
 flask-script
 pygal
-lxml
-html2text
+newsapi-python
+gunicorn

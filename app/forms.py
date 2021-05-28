@@ -1,5 +1,6 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, PasswordField, SelectField
+from wtforms import StringField, SubmitField, PasswordField, SelectField, widgets
+from wtforms.fields.core import SelectMultipleField
 from wtforms.fields.html5 import EmailField
 from wtforms.validators import DataRequired, Length, EqualTo, Regexp
 
@@ -19,7 +20,7 @@ class RegisterForm(FlaskForm):
         "Username",
         validators=[
             DataRequired(),
-            Length(min=0, max=30, message="The name should be 4 to 30 letters long."),
+            Length(min=4, max=30, message="The name should be 4 to 30 letters long."),
             Regexp(
                 "[a-zA-Z0-9_-]+",
                 message="Only letters, numbers and _- are allowed in username.",
@@ -32,7 +33,7 @@ class RegisterForm(FlaskForm):
         validators=[
             DataRequired(),
             Length(
-                min=0, max=50, message="The password should be 6 to 50 letters long."
+                min=6, max=50, message="The password should be 6 to 50 letters long."
             ),
         ],
         render_kw={"placeholder": "Password"},
@@ -54,3 +55,19 @@ class RegisterForm(FlaskForm):
         validators=[DataRequired()],
     )
     submit = SubmitField("Register")
+
+
+class AddNewDirectoryForm(FlaskForm):
+    directory_name = StringField(
+        "directory_name",
+        validators=[
+            DataRequired(),
+            Length(
+                min=0,
+                max=10,
+                message="The length of directory name should be less than 10.",
+            ),
+        ],
+        render_kw={"placeholder": "Directory Name"},
+    )
+    submit = SubmitField("Create")

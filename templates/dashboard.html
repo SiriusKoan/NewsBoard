@@ -3,9 +3,28 @@
 {% block title %}News{% endblock %}
 
 {% block main_content %}
-<div class="directory">layout test</div>
-<div class="directory">layout test</div>
-<div class="directory">layout test</div>
-<div class="directory">layout test</div>
-<div class="directory">layout test</div>
+<div class="container">
+    <div>
+        <form action="/dashboard/" method="post">
+            {{ form.csrf_token }}
+            <div class="field">
+                {{ form.directory_name }}
+            </div>
+            <div class="field">
+                {{ form.public }}
+            </div>
+            <div class="field">
+                {{ form.submit }}
+            </div>
+        </form>
+    </div>
+    {% for directory in directories %}
+    <div class="directory">
+        <b>{{ directory["name"] }}</b>
+        {% for keyword in directory["keywords"] %}
+        <span>{{ keyword }}</span>
+        {% endfor %}
+    </div>
+    {% endfor %}
+</div>
 {% endblock %}
