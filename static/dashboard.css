@@ -1,0 +1,31 @@
+body {
+    margin: 0;
+    height: 100vh;
+    background-image: url(/static/bg/dashboard.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    backdrop-filter: brightness(80%) blur(4px);
+}
+
+.container {
+    display: flex;
+    justify-content: left;
+    height: 100%;
+}
+
+.container .directory {
+    margin: 4px;
+    padding: 2px;
+    flex: 1;
+}
+
+.container .directory:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+@media only screen and (max-width: 800px) {
+    .container {
+        flex-direction: column;
+    }
+}

@@ -1,27 +1,24 @@
-var websites_cache = 'websites';
-var websites = [
+var offline = 'offline';
+var path = [
     '/dashboard/',
-];
-var static_files_cache = "static_files"
-var static_files = [
     '/static/index.css',
     '/static/inputs.css',
     '/static/messages.css',
+    '/static/dashboard.css',
     '/static/index.js',
     '/static/msg.js',
+    '/static/bg/index.jpg',
+    '/static/bg/form.jpg',
+    '/static/bg/dashboard.jpg',
     'https://fonts.googleapis.com/css2?family=Caveat&display=swap',
-]
+];
 self.addEventListener('install', function (event) {
     // install files needed offline
     event.waitUntil(
-        caches.open(websites_cache)
+        caches.open(offline)
             .then(function (cache) {
-                return cache.addAll(websites);
+                return cache.addAll(path);
             }),
-        caches.open(static_files_cache)
-            .then(function (cache) {
-                return cache.addAll(static_files);
-            })
     );
 });
 
@@ -30,7 +27,7 @@ self.addEventListener('fetch', function (event) {
     event.respondWith(
         caches.match(event.request)
             .then(function (response) {
-                caches.open(websites_cache).then(function (cache) { cache.add(event.request) });
+                caches.open(offline).then(function (cache) { cache.add(event.request) });
                 if (response) {
                     return response;
                 }

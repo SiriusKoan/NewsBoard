@@ -7,4 +7,4 @@ from flask_login import login_required
 @dashboard_bp.route("/")
 @login_required
 def dashboard_page():
-    return render_template("dashboard_base.html")
+    return render_template("dashboard.html")
