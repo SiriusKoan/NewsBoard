@@ -6,3 +6,4 @@ flask-script
 pygal
 newsapi-python
 gunicorn
+psycopg2

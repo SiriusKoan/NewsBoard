@@ -47,11 +47,23 @@ button {
     border-color: rgba(255, 255, 255, 0);
     border-radius: 5px;
     height: 30px;
-    width: 50px;
+    width: 60px;
     background-color: white;
     cursor: pointer;
 }
 
 button:hover {
     opacity: 0.8;
+}
+
+.add {
+    color: rgb(38, 168, 38);
+}
+
+.remove {
+    color: crimson;
+}
+
+.update {
+    color: blue;
 }

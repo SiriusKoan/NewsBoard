@@ -27,12 +27,12 @@ class Users(db.Model):
 class Keywords(db.Model):
     __tablename__ = "keywords"
     ID = db.Column(db.Integer, primary_key=True)
-    keyword = db.Column(db.Text, nullable=False)
     directory_id = db.Column(db.Integer, db.ForeignKey("directories.ID"), nullable=False)
+    keyword = db.Column(db.Text, nullable=False)
 
-    def __init__(self, keyword, directory_id):
-        self.keyword = keyword
+    def __init__(self, directory_id, keyword):
         self.directory_id = directory_id
+        self.keyword = keyword
 
 
 class Directories(db.Model):

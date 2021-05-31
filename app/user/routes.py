@@ -25,7 +25,6 @@ def login_page():
                 password = form.password.data
                 if user := login_auth(username, password):
                     login_user(user)
-                    flash("Login as %s" % username, category="success")
                     return redirect(url_for("dashboard.dashboard_page"))
                 else:
                     flash("Login failed.", category="alert")

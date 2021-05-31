@@ -1,5 +1,5 @@
-var offline = 'offline';
-var path = [
+const offline = 'offline';
+const path = [
     '/dashboard/',
     '/static/index.css',
     '/static/inputs.css',
@@ -23,16 +23,17 @@ self.addEventListener('install', function (event) {
 });
 
 self.addEventListener('fetch', function (event) {
-    // every request from our site, passes through the fetch handler
     event.respondWith(
-        caches.match(event.request)
-            .then(function (response) {
-                // TODO do not save login, index, register and so on
+        caches.match(event.request).then(function (response) {
+            if (navigator.onLine) {
+                // use newest resources and refresh caches when online
                 caches.open(offline).then(function (cache) { cache.add(event.request) });
-                if (response) {
-                    return response;
-                }
-                return fetch(event.request);
+                return fetch(event.request)
             }
-            ))
+            else {
+                // use cache when offline
+                return response;
+            }
+        }
+        ))
 })
