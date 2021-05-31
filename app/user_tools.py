@@ -32,8 +32,6 @@ def register(username, password, email, lang):
             password=sha256(bytes(password.encode("utf-8"))).hexdigest(),
             email=email,
             lang=lang,
-            verify_code=None,
-            status=None,
         )
         db.session.add(new_user)
         db.session.commit()

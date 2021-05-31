@@ -66,3 +66,8 @@ def register_page():
                     for error in errors:
                         flash(error, category="alert")
                 return redirect(url_for("user.register_page"))
+
+
+@user_bp.route("/user_setting", methods=["GET", "POST"])
+def user_setting_page():
+    pass

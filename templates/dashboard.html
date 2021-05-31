@@ -1,38 +1,49 @@
-{% extends "dashboard_base.html" %}
+<!DOCTYPE html>
+<html lang="en">
 
-{% block title %}News{% endblock %}
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/dashboard.css">
+    <link rel="stylesheet" href="/static/inputs.css">
+    <script src="/static/index.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <title>News</title>
+</head>
 
-{% block main_content %}
-<div class="container">
+<body>
     <div class="container">
-        <form action="/dashboard/" method="post">
-            {{ form.csrf_token }}
-            <div class="field">
-                {{ form.directory_name }}
-            </div>
-            <div class="field">
-                {{ form.public }}
-            </div>
-            <div class="field">
-                {{ form.submit }}
-            </div>
-        </form>
-    </div>
-    <div class="container">
-        {% for directory in directories %}
-        <div class="directory">
-            <div>
-                <b>{{ directory["name"] }}</b>
-                <button class="add" id="{{ directory['id'] }}" onclick="addKeyword(this.id)">Add</button>
-                <button class="remove" id="{{ directory['id'] }}" onclick="deleteDirectory(this.id)">Delete</button>
-            </div>
-            <div>
-                {% for keyword in directory["keywords"] %}
-                <div class="keyword">{{ keyword }}</div>
-                {% endfor %}
-            </div>
+        <div class="container">
+            <form action="/dashboard/" method="post">
+                {{ form.csrf_token }}
+                <div class="field">
+                    {{ form.directory_name }}
+                </div>
+                <div class="field">
+                    {{ form.public }}
+                </div>
+                <div class="field">
+                    {{ form.submit }}
+                </div>
+            </form>
         </div>
-        {% endfor %}
+        <div class="container">
+            {% for directory in directories %}
+            <div class="directory">
+                <div>
+                    <b><a href="/dashboard/directory/{{ directory['name'] }}">{{ directory["name"] }}</a></b>
+                    <button class="add" id="{{ directory['id'] }}" onclick="addKeyword(this.id)">Add</button>
+                    <button class="remove" id="{{ directory['id'] }}" onclick="deleteDirectory(this.id)">Delete</button>
+                </div>
+                <div>
+                    {% for keyword in directory["keywords"] %}
+                    <div class="keyword">{{ keyword }}</div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
     </div>
-</div>
-{% endblock %}
+    <script src="/static/dashboard.js"></script>
+</body>

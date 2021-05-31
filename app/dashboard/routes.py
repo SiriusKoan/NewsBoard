@@ -2,7 +2,13 @@ from flask_login import login_required, current_user
 from flask import flash, request, render_template, abort
 from . import dashboard_bp
 from ..forms import AddNewDirectoryForm
-from ..news_tools import create_directory, get_directories, delete_directory, add_keyword
+from ..news_tools import (
+    create_directory,
+    get_directories,
+    delete_directory,
+    add_keyword,
+    render_directory,
+)
 
 
 # url prefix: /dashboard
@@ -48,3 +54,12 @@ def dashboard_backend():
             if delete_directory(directory_id):
                 return "OK"
         abort(400)
+
+
+@dashboard_bp.route("/directory/<string:directory_name>", methods=["GET"])
+@login_required
+def get_directory_page(directory_name):
+    if directory := render_directory(current_user.id, directory_name):
+        return render_template("directory_page.html", directory=directory)
+    else:
+        abort(404)

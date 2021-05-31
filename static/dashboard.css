@@ -1,12 +1,7 @@
 body {
     margin: 0;
     height: 100vh;
-    background-image: url(/static/bg/dashboard.jpg);
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-attachment: fixed;
-    backdrop-filter: brightness(80%) blur(4px);
+    background-color: rgba(72, 195, 233, 0.7);
 }
 
 .container {
@@ -33,6 +28,16 @@ body {
 
 .container div {
     padding: 2px;
+    word-wrap: normal;
+}
+
+.container a {
+    color: blue;
+    text-decoration: none;
+}
+
+.container a:hover {
+    text-decoration: underline;
 }
 
 @media only screen and (max-width: 800px) {

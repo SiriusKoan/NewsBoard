@@ -1,6 +1,7 @@
 from os import getenv
+from datetime import datetime
 from newsapi import NewsApiClient
-from .db import db, Directories, Keywords
+from .db import db, Users, Directories, Keywords
 
 newsapi = NewsApiClient(api_key=getenv("NEWSAPIKEY"))
 
@@ -12,7 +13,7 @@ def get_directories(user_id):
             {
                 "id": directory.ID,
                 "name": directory.name,
-                "keywords": [keyword.keyword for keyword in directory.keywords],
+                "keywords": [keyword.value for keyword in directory.keywords],
             }
             for directory in directories
         ]
@@ -46,8 +47,22 @@ def delete_directory(directory_id):
         return False
 
 
+def render_directory(user_id, directory_name):
+    if directory := Directories.query.filter_by(
+        user_id=user_id, name=directory_name
+    ).first():
+        user = Users.query.filter_by(ID=user_id).first()
+        language = user.lang
+        news = dict()
+        for keyword in directory.keywords:
+            news[keyword.value] = get_news(keyword.value, language)
+        return {"name": directory_name, "news": news}
+    else:
+        return False
+
+
 def add_keyword(directory_id, keyword):
-    if not Keywords.query.filter_by(directory_id=directory_id, keyword=keyword).all():
+    if not Keywords.query.filter_by(directory_id=directory_id, value=keyword).all():
         db.session.add(Keywords(directory_id, keyword))
         db.session.commit()
         return True
@@ -55,4 +70,14 @@ def add_keyword(directory_id, keyword):
 
 
 def get_news(query, language):
-    articles = newsapi.get_everything(q=query, language=language, sort_by="relevancy")
+    today = datetime.now().strftime("%Y-%m-%d")
+    articles = newsapi.get_everything(
+        q=query,
+        language=language,
+        sort_by="popularity",
+        from_param=today,
+        to=today,
+    )
+    if articles["status"] == "ok":
+        return articles["articles"][:7]
+    return False
