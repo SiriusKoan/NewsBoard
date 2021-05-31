@@ -1,4 +1,4 @@
-const offline = 'offline';
+const offline = 'offline_cache';
 const path = [
     '/dashboard/',
     '/static/index.css',
@@ -28,7 +28,7 @@ self.addEventListener('fetch', function (event) {
             if (navigator.onLine) {
                 // use newest resources and refresh caches when online
                 caches.open(offline).then(function (cache) { cache.add(event.request) });
-                return fetch(event.request)
+                return fetch(event.request);
             }
             else {
                 // use cache when offline

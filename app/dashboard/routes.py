@@ -2,7 +2,7 @@ from flask_login import login_required, current_user
 from flask import flash, request, render_template, abort
 from . import dashboard_bp
 from ..forms import AddNewDirectoryForm
-from ..news_tools import create_directory, get_directories, add_keyword
+from ..news_tools import create_directory, get_directories, delete_directory, add_keyword
 
 
 # url prefix: /dashboard
@@ -30,14 +30,21 @@ def dashboard_page():
         )
 
 
-@dashboard_bp.route("/backend", methods=["POST"])
+@dashboard_bp.route("/backend", methods=["POST", "DELETE"])
 @login_required
 def dashboard_backend():
     if request.method == "POST":
         data = request.get_json(force=True)
-        directory_id = data["id"]
-        keyword = data["keyword"]
-        if add_keyword(directory_id, keyword):
-            return "OK"
-        else:
-            abort(400)
+        directory_id = data.get("id", None)
+        keyword = data.get("keyword", None)
+        if directory_id and keyword:
+            if add_keyword(directory_id, keyword):
+                return "OK"
+        abort(400)
+    if request.method == "DELETE":
+        data = request.get_json(force=True)
+        directory_id = data.get("id", None)
+        if directory_id:
+            if delete_directory(directory_id):
+                return "OK"
+        abort(400)

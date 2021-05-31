@@ -8,7 +8,14 @@ newsapi = NewsApiClient(api_key=getenv("NEWSAPIKEY"))
 def get_directories(user_id):
     try:
         directories = Directories.query.filter_by(user_id=user_id).all()
-        return [{"id": directory.ID, "name": directory.name, "keywords": [keyword.keyword for keyword in directory.keywords]} for directory in directories]
+        return [
+            {
+                "id": directory.ID,
+                "name": directory.name,
+                "keywords": [keyword.keyword for keyword in directory.keywords],
+            }
+            for directory in directories
+        ]
     except:
         return False
 
@@ -27,8 +34,16 @@ def update_directory():
     pass
 
 
-def delete_directory():
-    pass
+def delete_directory(directory_id):
+    if directory := Directories.query.filter_by(ID=directory_id).first():
+        keywords = Keywords.query.filter_by(directory_id=directory_id).all()
+        for keyword in keywords:
+            db.session.delete(keyword)
+        db.session.delete(directory)
+        db.session.commit()
+        return True
+    else:
+        return False
 
 
 def add_keyword(directory_id, keyword):

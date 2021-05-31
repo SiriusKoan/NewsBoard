@@ -24,7 +24,7 @@
             <div>
                 <b>{{ directory["name"] }}</b>
                 <button class="add" id="{{ directory['id'] }}" onclick="addKeyword(this.id)">Add</button>
-                <button class="remove" id="{{ directory['id'] }}">Delete</button>
+                <button class="remove" id="{{ directory['id'] }}" onclick="deleteDirectory(this.id)">Delete</button>
             </div>
             <div>
                 {% for keyword in directory["keywords"] %}
