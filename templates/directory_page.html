@@ -5,9 +5,12 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="/static/icon.png" type="image/x-icon">
     <link rel="stylesheet" href="/static/dashboard.css">
     <link rel="stylesheet" href="/static/inputs.css">
     <script src="/static/index.js"></script>
+    <script src="/static/dashboard.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <title>{{ directory["name"] }}</title>
 </head>
 
@@ -17,7 +20,7 @@
         <div style="width: 19%;" class="directory">
             <div>
                 <span>{{ name }}</span>
-                <button class="remove">Delete</button>
+                <button class="remove" onclick="deleteKeyword('{{ directory['id'] }}_{{ name }}');">Delete</button>
             </div>
             {% for piece in directory["news"][name] %}
             <div><b>Title: </b><a href="{{ piece['url'] }}" target="_blank">{{ piece["title"] }}</a></div>

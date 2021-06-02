@@ -56,14 +56,26 @@ def render_directory(user_id, directory_name):
         news = dict()
         for keyword in directory.keywords:
             news[keyword.value] = get_news(keyword.value, language)
-        return {"name": directory_name, "news": news}
+        return {"name": directory_name, "id": directory.ID, "news": news}
     else:
         return False
 
 
-def add_keyword(directory_id, keyword):
-    if not Keywords.query.filter_by(directory_id=directory_id, value=keyword).all():
-        db.session.add(Keywords(directory_id, keyword))
+def add_keyword(directory_id, value):
+    # check illegal characters
+    value = value.replace("_", " ")
+    # there cannot be two same keywords in one directory
+    if not Keywords.query.filter_by(directory_id=directory_id, value=value).all():
+        db.session.add(Keywords(directory_id, value))
+        db.session.commit()
+        return True
+    return False
+
+
+def delete_keyword(directory_id, value):
+    keyword = Keywords.query.filter_by(directory_id=directory_id, value=value).first()
+    if keyword:
+        db.session.delete(keyword)
         db.session.commit()
         return True
     return False
@@ -77,7 +89,8 @@ def get_news(query, language):
         sort_by="popularity",
         from_param=today,
         to=today,
+        page_size=7,
     )
     if articles["status"] == "ok":
-        return articles["articles"][:7]
+        return articles["articles"]
     return False

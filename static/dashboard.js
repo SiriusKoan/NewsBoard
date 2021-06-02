@@ -13,11 +13,24 @@ function deleteDirectory(id) {
         $.ajax({
             url: "/dashboard/backend",
             type: "delete",
-            data: JSON.stringify({ "id": id }),
+            data: JSON.stringify({ "type": "directory", "id": id }),
             dataType: "json",
         })
             .always(function (r) { respond(r); })
     }
+}
+
+function deleteKeyword(identifier) {
+    identifier = identifier.split("_");
+    var directory_id = parseInt(identifier[0]);
+    var keyword = identifier[1];
+    $.ajax({
+        url: "/dashboard/backend",
+        type: "delete",
+        data: JSON.stringify({ "type": "keyword", "directory_id": directory_id, "keyword": keyword }),
+        dataType: "json",
+    })
+        .always(function (r) { respond(r); })
 }
 
 function addKeyword(id) {

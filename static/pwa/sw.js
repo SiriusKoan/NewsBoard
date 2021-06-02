@@ -1,6 +1,7 @@
 const offline = 'offline_cache';
 const path = [
     '/dashboard/',
+    '/static/icon.png',
     '/static/index.css',
     '/static/inputs.css',
     '/static/messages.css',

@@ -4,6 +4,7 @@ from . import dashboard_bp
 from ..forms import AddNewDirectoryForm
 from ..news_tools import (
     create_directory,
+    delete_keyword,
     get_directories,
     delete_directory,
     add_keyword,
@@ -49,11 +50,23 @@ def dashboard_backend():
         abort(400)
     if request.method == "DELETE":
         data = request.get_json(force=True)
-        directory_id = data.get("id", None)
-        if directory_id:
-            if delete_directory(directory_id):
-                return "OK"
-        abort(400)
+        type = data.get("type", None)
+        if type:
+            if type == "directory":
+                directory_id = data.get("id", None)
+                if directory_id:
+                    if delete_directory(directory_id):
+                        return "OK"
+                abort(400)
+            if type == "keyword":
+                directory_id = data.get("directory_id", None)
+                keyword = data.get("keyword", None)
+                if directory_id and keyword:
+                    if delete_keyword(directory_id, keyword):
+                        return "OK"
+                abort(400)
+        else:
+            abort(400)
 
 
 @dashboard_bp.route("/directory/<string:directory_name>", methods=["GET"])

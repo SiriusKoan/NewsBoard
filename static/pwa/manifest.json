@@ -1,6 +1,6 @@
 {
     "name": "NewsBoard",
-    "short_name": "NewBoard",
+    "short_name": "NewsBoard",
     "background_color": "#ffffff",
     "description": "A news website that allows you to get what you want to know.",
     "display": "standalone",
