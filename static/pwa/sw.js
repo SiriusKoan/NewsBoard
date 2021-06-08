@@ -24,16 +24,20 @@ self.addEventListener('install', function (event) {
 });
 
 self.addEventListener('fetch', function (event) {
+    caches.match(event.request).then(function (response) {
+        if (navigator.onLine & response) {
+            // refresh caches when online
+            caches.open(offline).then(function (cache) { cache.add(event.request) });
+        }
+    }
+    )
     event.respondWith(
         caches.match(event.request).then(function (response) {
-            if (navigator.onLine) {
-                // use newest resources and refresh caches when online
-                caches.open(offline).then(function (cache) { cache.add(event.request) });
-                return fetch(event.request);
+            if (response) {
+                return response;
             }
             else {
-                // use cache when offline
-                return response;
+                return fetch(event.request);
             }
         }
         ))

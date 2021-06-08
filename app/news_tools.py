@@ -1,4 +1,5 @@
 from os import getenv
+from multiprocessing import Pool
 from datetime import datetime
 from newsapi import NewsApiClient
 from .db import db, Users, Directories, Keywords
@@ -52,10 +53,14 @@ def render_directory(user_id, directory_name):
         user_id=user_id, name=directory_name
     ).first():
         user = Users.query.filter_by(ID=user_id).first()
-        language = user.lang
         news = dict()
-        for keyword in directory.keywords:
-            news[keyword.value] = get_news(keyword.value, language)
+        language = user.lang
+        with Pool(8) as pool:
+            results = pool.starmap(
+                get_news, [(keyword.value, language) for keyword in directory.keywords]
+            )
+            for i, keyword in enumerate(directory.keywords):
+                news[keyword.value] = results[i]
         return {"name": directory_name, "id": directory.ID, "news": news}
     else:
         return False
@@ -81,7 +86,7 @@ def delete_keyword(directory_id, value):
     return False
 
 
-def get_news(query, language):
+def get_news(query, language="en"):
     today = datetime.now().strftime("%Y-%m-%d")
     articles = newsapi.get_everything(
         q=query,
