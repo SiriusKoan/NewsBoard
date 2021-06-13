@@ -55,12 +55,14 @@ def render_directory(user_id, directory_name):
         user = Users.query.filter_by(ID=user_id).first()
         news = dict()
         language = user.lang
+        args = [(keyword.value, language) for keyword in directory.keywords]
         with Pool(8) as pool:
             results = pool.starmap(
-                get_news, [(keyword.value, language) for keyword in directory.keywords]
+                get_news, args
             )
             for i, keyword in enumerate(directory.keywords):
-                news[keyword.value] = results[i]
+                if results[i]:
+                    news[keyword.value] = results[i]
         return {"name": directory_name, "id": directory.ID, "news": news}
     else:
         return False

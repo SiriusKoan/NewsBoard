@@ -6,8 +6,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="/static/icon.png" type="image/x-icon">
-    <link rel="stylesheet" href="/static/dashboard.css">
+    <link rel="stylesheet" href="/static/directory.css">
     <link rel="stylesheet" href="/static/inputs.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Kalam&display=swap" rel="stylesheet">
     <script src="/static/index.js"></script>
     <script src="/static/dashboard.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
@@ -15,18 +17,19 @@
 </head>
 
 <body>
-    <div class="container">
+    <div class="directory_container">
         {% for name in directory["news"].keys() %}
-        <div style="width: 19%;" class="directory">
-            <div>
-                <span>{{ name }}</span>
+        <div class="directory" onclick="show_hide(this);">
+            <div class="name_section">
+                <span class="name">{{ name }}</span>
                 <button class="remove" onclick="deleteKeyword('{{ directory['id'] }}_{{ name }}');">Delete</button>
             </div>
             {% for piece in directory["news"][name] %}
-            <div><b>Title: </b><a href="{{ piece['url'] }}" target="_blank">{{ piece["title"] }}</a></div>
-            <div><b>Source: </b>{{ piece["source"]["name"] }}</div>
-            <div><b>Author: </b>{{ piece["author"] }}</div>
-            <hr>
+            <div class="piece">
+                <div class="title"><a href="{{ piece['url'] }}" target="_blank">{{ piece["title"] }}</a></div>
+                <div class="source">{{ piece["source"]["name"] }}</div>
+                {% if piece['urlToImage'] %}<img src="{{ piece['urlToImage'] }}">{% endif %}
+            </div>
             {% endfor %}
         </div>
         {% endfor %}

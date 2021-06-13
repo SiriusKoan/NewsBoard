@@ -1,0 +1,70 @@
+body {
+    margin: 0;
+    min-height: 100vh;
+    min-width: 100vw;
+    background-image: url(/static/bg/form.jpg);
+    background-position: center;
+    background-size: cover;
+    background-attachment: fixed;
+    backdrop-filter: blur(7px) brightness(60%) opacity(0.8);
+}
+
+.directory_container {
+    display: flex;
+    flex-wrap: wrap;
+    color: white;
+}
+
+.directory_container a {
+    color: white;
+    text-decoration: none;
+    text-underline-offset: 3px;
+}
+
+.directory_container a:hover {
+    text-decoration: underline;
+}
+
+.directory_container > .directory {
+    padding: 0;
+    margin: 0;
+    min-width: 220px;
+    max-width: 360px;
+    flex-shrink: 0;
+}
+
+.directory_container > .directory > div {
+    padding: 8px;
+}
+
+.directory_container > .directory > .name_section {
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+.directory_container > .directory > .name {
+    font-weight: bold;
+    font-size: 30px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.directory_container > .directory > .piece {
+    height: 220px;
+}
+
+.directory_container > .directory > .piece > .title {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.directory_container > .directory > .piece > img {
+    margin-top: 10px;
+    height: 70px;
+    box-shadow: 0 3px 5px rgba(255, 255, 255, 0.1);
+}
+
+@media only screen and (max-width: 600px) {
+    .directory_container {
+        flex-direction: column;
+    }
+}

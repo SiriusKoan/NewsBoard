@@ -45,3 +45,19 @@ function addKeyword(id) {
             .always(function (r) { respond(r); })
     }
 }
+
+function show_hide(element) {
+    if (window.innerWidth > 600) {
+        var children = element.children;
+        if (children[1].style.display == "none") {
+            for (i = 1; i < children.length; i++) {
+                children[i].style.display = "block";
+            }
+        }
+        else {
+            for (i = 1; i < children.length; i++) {
+                children[i].style.display = "none";
+            }
+        }
+    }
+}

@@ -10,7 +10,6 @@ const path = [
     '/static/msg.js',
     '/static/bg/index.jpg',
     '/static/bg/form.jpg',
-    '/static/bg/dashboard.jpg',
     'https://fonts.googleapis.com/css2?family=Caveat&display=swap',
 ];
 self.addEventListener('install', function (event) {
@@ -24,21 +23,18 @@ self.addEventListener('install', function (event) {
 });
 
 self.addEventListener('fetch', function (event) {
-    caches.match(event.request).then(function (response) {
-        if (navigator.onLine & response) {
-            // refresh caches when online
-            caches.open(offline).then(function (cache) { cache.add(event.request) });
-        }
-    }
-    )
-    event.respondWith(
-        caches.match(event.request).then(function (response) {
+    var response;
+    var cachedResponse = caches.match(event.request).catch(function () {
+        return fetch(event.request);
+    }).then(function (r) {
+        response = r;
+        caches.open(offline).then(function (cache) {
             if (response) {
-                return response;
+                cache.put(event.request, response);
             }
-            else {
-                return fetch(event.request);
-            }
-        }
-        ))
+        });
+        return response.clone();
+    }).catch(function () {
+        return caches.match(event.request);
+    });
 })

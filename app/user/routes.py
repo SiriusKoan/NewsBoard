@@ -31,6 +31,7 @@ def login_page():
                     return redirect(url_for("user.login_page"))
             else:
                 flash("Invalid.")
+                return redirect(url_for("user.login_page"))
 
 
 @user_bp.route("/logout", methods=["GET"])
@@ -70,4 +71,4 @@ def register_page():
 
 @user_bp.route("/user_setting", methods=["GET", "POST"])
 def user_setting_page():
-    pass
+    return ""
