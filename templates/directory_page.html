@@ -12,15 +12,19 @@
     <link href="https://fonts.googleapis.com/css2?family=Kalam&display=swap" rel="stylesheet">
     <script src="/static/index.js"></script>
     <script src="/static/dashboard.js"></script>
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <title>{{ directory["name"] }}</title>
 </head>
 
 <body>
+    <div id="operation">
+        <a href="/dashboard">Dashboard</a>
+        <button class="add" onclick="addKeyword({{ directory['id'] }})">Add</button>
+    </div>
     <div class="directory_container">
         {% for name in directory["news"].keys() %}
-        <div class="directory" onclick="show_hide(this);">
-            <div class="name_section">
+        <div class="directory">
+            <div class="name_section" onclick="show_hide(this);">
                 <span class="name">{{ name }}</span>
                 <button class="remove" onclick="deleteKeyword('{{ directory['id'] }}_{{ name }}');">Delete</button>
             </div>

@@ -1,6 +1,6 @@
 from os import getenv
 from multiprocessing import Pool
-from datetime import datetime
+from datetime import datetime, timedelta
 from newsapi import NewsApiClient
 from .db import db, Users, Directories, Keywords
 
@@ -61,8 +61,33 @@ def render_directory(user_id, directory_name):
                 get_news, args
             )
             for i, keyword in enumerate(directory.keywords):
-                if results[i]:
-                    news[keyword.value] = results[i]
+                news[keyword.value] = results[i]
+
+        # for development
+        # news = {
+        #     "A": [
+        #         {
+        #             "url": "https://google.com",
+        #             "urlToImage": "https://google.com",
+        #             "title": "meow",
+        #             "source": {"name": "author"},
+        #         },
+        #         {
+        #             "url": "https://google.com",
+        #             "urlToImage": "https://google.com",
+        #             "title": "meow",
+        #             "source": {"name": "author"},
+        #         }
+        #     ],
+        #     "B": [
+        #         {
+        #             "url": "https://google.com",
+        #             "urlToImage": "https://google.com",
+        #             "title": "meow2",
+        #             "source": {"name": "author"},
+        #         }
+        #     ],
+        # }
         return {"name": directory_name, "id": directory.ID, "news": news}
     else:
         return False
@@ -71,6 +96,7 @@ def render_directory(user_id, directory_name):
 def add_keyword(directory_id, value):
     # check illegal characters
     value = value.replace("_", " ")
+    value = value.strip()
     # there cannot be two same keywords in one directory
     if not Keywords.query.filter_by(directory_id=directory_id, value=value).all():
         db.session.add(Keywords(directory_id, value))
@@ -90,11 +116,12 @@ def delete_keyword(directory_id, value):
 
 def get_news(query, language="en"):
     today = datetime.now().strftime("%Y-%m-%d")
+    yesterday = (datetime.now() - timedelta(days=1)).strftime("%Y-%m-%d")
     articles = newsapi.get_everything(
         q=query,
         language=language,
         sort_by="popularity",
-        from_param=today,
+        from_param=yesterday,
         to=today,
         page_size=7,
     )

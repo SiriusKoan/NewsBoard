@@ -47,8 +47,8 @@ function addKeyword(id) {
 }
 
 function show_hide(element) {
-    if (window.innerWidth > 600) {
-        var children = element.children;
+    if (window.innerWidth < 600) {
+        var children = element.parentElement.children;
         if (children[1].style.display == "none") {
             for (i = 1; i < children.length; i++) {
                 children[i].style.display = "block";

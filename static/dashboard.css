@@ -1,16 +1,19 @@
 body {
     margin: 0;
-    height: 100vh;
+    font-family: 'Kalam', cursive;
+    min-height: 100vh;
+    min-width: 100vw;
     background-image: url(/static/bg/form.jpg);
     background-position: center;
     background-size: cover;
     background-attachment: fixed;
+    backdrop-filter: blur(7px) brightness(60%) opacity(0.8);
 }
 
 .container {
     display: flex;
     justify-content: left;
-    height: 100%;
+    height: fit-content;
     flex-direction: row;
     flex-wrap: wrap;
     font-family: 'Kalam', cursive;
@@ -35,10 +38,6 @@ body {
 .container a:hover {
     text-decoration: underline;
 }
-
-/* .container .directory {
-    
-} */
 
 @media only screen and (max-width: 800px) {
     .container {
