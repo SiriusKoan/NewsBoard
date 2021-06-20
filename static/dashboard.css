@@ -39,8 +39,13 @@ body {
     text-decoration: underline;
 }
 
-@media only screen and (max-width: 800px) {
+.directory .title {
+    padding: 10px;
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+@media only screen and (max-width: 500px) {
     .container {
-        flex-direction: row;
+        flex-direction: column;
     }
 }

@@ -22,7 +22,7 @@ def get_directories(user_id):
         return False
 
 
-def create_directory(user_id, name):
+def add_directory(user_id, name):
     try:
         directory = Directories(user_id, name)
         db.session.add(directory)
@@ -30,10 +30,6 @@ def create_directory(user_id, name):
         return True
     except:
         return False
-
-
-def update_directory():
-    pass
 
 
 def delete_directory(directory_id):
@@ -77,7 +73,7 @@ def render_directory(user_id, directory_name):
         #             "urlToImage": "https://google.com",
         #             "title": "meow",
         #             "source": {"name": "author"},
-        #         }
+        #         },
         #     ],
         #     "B": [
         #         {

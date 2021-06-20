@@ -8,6 +8,17 @@ function respond(r) {
     }
 }
 
+function addDirectory() {
+    let value = document.getElementById("directory_name").value;
+    $.ajax({
+        url: "/dashboard/backend",
+        type: "post",
+        data: JSON.stringify({ "type": "directory", "value": value }),
+        dataType: "json",
+    })
+        .always(function (r) { respond(r); })
+}
+
 function deleteDirectory(id) {
     if (window.confirm("Are you sure to delete this directory?")) {
         $.ajax({
@@ -22,8 +33,8 @@ function deleteDirectory(id) {
 
 function deleteKeyword(identifier) {
     identifier = identifier.split("_");
-    var directory_id = parseInt(identifier[0]);
-    var keyword = identifier[1];
+    let directory_id = parseInt(identifier[0]);
+    let keyword = identifier[1];
     $.ajax({
         url: "/dashboard/backend",
         type: "delete",
@@ -34,12 +45,12 @@ function deleteKeyword(identifier) {
 }
 
 function addKeyword(id) {
-    var keyword = prompt("Enter the keyword");
+    let keyword = prompt("Enter the keyword");
     if (keyword) {
         $.ajax({
             url: "/dashboard/backend",
             type: "post",
-            data: JSON.stringify({ "id": id, "keyword": keyword }),
+            data: JSON.stringify({ "type": "keyword", "id": id, "keyword": keyword }),
             dataType: "json",
         })
             .always(function (r) { respond(r); })
@@ -48,7 +59,7 @@ function addKeyword(id) {
 
 function show_hide(element) {
     if (window.innerWidth < 600) {
-        var children = element.parentElement.children;
+        let children = element.parentElement.children;
         if (children[1].style.display == "none") {
             for (i = 1; i < children.length; i++) {
                 children[i].style.display = "block";

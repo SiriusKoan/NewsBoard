@@ -8,6 +8,8 @@
     <link rel="shortcut icon" href="/static/icon.png" type="image/x-icon">
     <link rel="stylesheet" href="/static/dashboard.css">
     <link rel="stylesheet" href="/static/inputs.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Kalam:wght@300&display=swap" rel="stylesheet">
     <script src="/static/index.js"></script>
     <script src="/static/dashboard.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
@@ -17,23 +19,13 @@
 <body>
     <div class="container">
         <div class="container">
-            <form action="/dashboard/" method="post">
-                {{ form.csrf_token }}
-                <div class="field">
-                    {{ form.directory_name }}
-                </div>
-                <div class="field">
-                    {{ form.public }}
-                </div>
-                <div class="field">
-                    {{ form.submit }}
-                </div>
-            </form>
+            <input type="text" placeholder="Directory name" id="directory_name">
+            <input type="submit" value="Create" style="height: 30px;" onclick="addDirectory();">
         </div>
         <div class="container">
             {% for directory in directories %}
             <div class="directory">
-                <div>
+                <div class="title" onclick="show_hide(this);">
                     <b><a href="/dashboard/directory/{{ directory['name'] }}">{{ directory["name"] }}</a></b>
                     <button class="add" onclick="addKeyword({{ directory['id'] }})">Add</button>
                     <button class="remove" onclick="deleteDirectory({{ directory['id'] }})">Delete</button>
