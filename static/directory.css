@@ -22,9 +22,16 @@ a:hover {
 }
 
 #operation {
-    background-color: rgba(255, 255, 255, 0.3);
-    padding: 10px 0 10px 20px;
-    height: 40px;
+    background-color: rgba(255, 255, 255, 0.5);
+    z-index: 100;
+    width: 100%;
+    position: sticky;
+    top: 0;
+}
+
+#operation * {
+    display: inline-block;
+    margin: 20px 0 20px 20px;
 }
 
 .directory_container {

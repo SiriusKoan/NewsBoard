@@ -7,3 +7,4 @@ pygal
 newsapi-python
 gunicorn
 psycopg2
+RandomUsers
