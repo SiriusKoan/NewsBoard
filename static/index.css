@@ -14,13 +14,15 @@ body#index {
     background-image: url(/static/bg/index.jpg);
     background-position: bottom;
     backdrop-filter: blur(1px) brightness(90%);
+    animation: bg-blur-index;
+    animation-duration: 3s;
 }
 
 body.form {
     background-image: url(/static/bg/form.jpg);
     background-position: center;
     backdrop-filter: blur(5px);
-    animation: bg-blur;
+    animation: bg-blur-form;
     animation-duration: 2s;
 }
 
@@ -44,6 +46,16 @@ li a {
 }
 
 li a:hover {
+    text-decoration: underline;
+    color: #cacaca;
+}
+
+a {
+    text-decoration: none;
+    color: white;
+}
+
+a:hover {
     text-decoration: underline;
     color: #cacaca;
 }
@@ -124,7 +136,16 @@ li a:hover {
     }
 }
 
-@keyframes bg-blur {
+@keyframes bg-blur-index {
+    from {
+        backdrop-filter: blur(3px);
+    }
+    to {
+        backdrop-filter: blur(1px) brightness(90%);
+    }
+}
+
+@keyframes bg-blur-form {
     from {
         backdrop-filter: blur(2px);
     }

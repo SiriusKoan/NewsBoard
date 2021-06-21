@@ -18,9 +18,14 @@
 
 <body>
     <div class="container">
-        <div class="container">
-            <input type="text" placeholder="Directory name" id="directory_name">
-            <input type="submit" value="Create" style="height: 30px;" onclick="addDirectory();">
+        <div class="container" style="flex-direction: column;">
+            <div class="field">
+                <input type="text" placeholder="Directory name" id="directory_name">
+            </div>
+            <div class="field">
+                <input type="submit" value="Create" style="height: 30px;" onclick="addDirectory();">
+            </div>
+            <div><a href="/user_setting">User Setting</a></div>
         </div>
         <div class="container">
             {% for directory in directories %}

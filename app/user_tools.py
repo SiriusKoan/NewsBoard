@@ -38,3 +38,22 @@ def register(username, password, email, lang):
         return True
     else:
         return False
+
+
+def render_user_data(user_id):
+    if user := Users.query.filter_by(ID=user_id).first():
+        return {"username": user.username, "email": user.email, "language": user.lang}
+    else:
+        return False
+
+
+def update_user(user_id, new_password, email, lang):
+    if user := Users.query.filter_by(ID=user_id):
+        data = {"email": email, "lang": lang}
+        if new_password:
+            data["password"] = sha256(bytes(new_password.encode("utf-8"))).hexdigest()
+        user.update(data)
+        db.session.commit()
+        return True
+    else:
+        return False

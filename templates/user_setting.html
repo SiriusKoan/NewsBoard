@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/inputs.css">
+    <link rel="stylesheet" href="/static/index.css">
+    <script src="/static/index.js"></script>
+    <title>Setting</title>
+</head>
+
+<body class="form">
+    <h1 style="color: white; margin: 0; padding: 20px 10px 0 20px;">User Setting</h1>
+    <form action="/user_setting" , method="POST" style="padding-left: 20px;">
+        {{ form.csrf_token }}
+        <div class="field">{{ form.password }}</div>
+        <div class="field">{{ form.email }}</div>
+        <div class="field">{{ form.language }}</div>
+        <div class="field">{{ form.submit }}</div>
+        <a href="/dashboard">Dashboard</a>
+    </form>
+</body>
+
+</html>

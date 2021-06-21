@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, PasswordField, SelectField, widgets
+from wtforms import StringField, SubmitField, PasswordField, SelectField
 from wtforms.fields.html5 import EmailField
-from wtforms.validators import DataRequired, Length, EqualTo, Regexp
+from wtforms.validators import DataRequired, Length, EqualTo, Regexp, ValidationError
 
 
 class LoginForm(FlaskForm):
@@ -50,7 +50,30 @@ class RegisterForm(FlaskForm):
     )
     language = SelectField(
         "Language: ",
-        choices=[("en", "English"), ("zh-TW", "Chinese Tranditional")],
+        choices=[("en", "English")],
         validators=[DataRequired()],
     )
     submit = SubmitField("Register")
+
+
+class UserSettingForm(FlaskForm):
+    password = PasswordField(
+        "Password",
+        render_kw={"placeholder": "Password"},
+    )
+    email = EmailField(
+        "Email", validators=[DataRequired()], render_kw={"placeholder": "Email"}
+    )
+    language = SelectField(
+        "Language: ",
+        choices=[("en", "English")],
+        validators=[DataRequired()],
+    )
+    submit = SubmitField("Update")
+
+    def validate_password(self, field):
+        if type(field.data) is str:
+            if field.data != "" and (len(field.data) < 6 or len(field.data) > 50):
+                raise ValidationError("The password should be 6 to 50 letters long.")
+        else:
+            raise ValidationError("Invalid.")

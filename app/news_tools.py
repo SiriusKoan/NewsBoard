@@ -53,9 +53,7 @@ def render_directory(user_id, directory_name):
         language = user.lang
         args = [(keyword.value, language) for keyword in directory.keywords]
         with Pool(8) as pool:
-            results = pool.starmap(
-                get_news, args
-            )
+            results = pool.starmap(get_news, args)
             for i, keyword in enumerate(directory.keywords):
                 news[keyword.value] = results[i]
 
@@ -113,14 +111,15 @@ def delete_keyword(directory_id, value):
 def get_news(query, language="en"):
     today = datetime.now().strftime("%Y-%m-%d")
     yesterday = (datetime.now() - timedelta(days=1)).strftime("%Y-%m-%d")
-    articles = newsapi.get_everything(
-        q=query,
-        language=language,
-        sort_by="popularity",
-        from_param=yesterday,
-        to=today,
-        page_size=7,
-    )
+    args = {
+        "q": query,
+        "language": language,
+        "sort_by": "popularity",
+        "from_param": yesterday,
+        "to": today,
+        "page_size": 7,
+    }
+    articles = newsapi.get_everything(**args)
     if articles["status"] == "ok":
         return articles["articles"]
     return False
