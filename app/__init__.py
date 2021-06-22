@@ -1,5 +1,4 @@
-from flask import Blueprint, Flask, g
-from flask_sqlalchemy import SQLAlchemy
+from flask import Flask
 from flask_login import LoginManager
 from .config import config_list
 from .db import db

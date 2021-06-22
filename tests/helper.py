@@ -13,13 +13,12 @@ class TestModel(unittest.TestCase):
         self.app_context = self.app.test_request_context()
         self.app_context.push()
         self.login_data = {"username": "test", "password": "test"}
-        db.drop_all()
         generate_test_data()
 
     def tearDown(self) -> None:
+        db.drop_all()
         if self.app_context is not None:
             self.app_context.pop()
-        db.drop_all()
 
     def login(self):
         return self.client.post(url_for("user.login_page"), data=self.login_data)
@@ -76,15 +75,19 @@ def generate_test_data():
     )
     db.session.commit()
 
+    db.session.add(Directories(1, "test_directory"))
+    db.session.commit()
     name = ru.Username()
     directory_model = DirectoryModel(name=name, user_id=1)
-    directories = directory_model.bulk_generate(n=10)
+    directories = directory_model.bulk_generate(n=5)
     for directory in directories:
         db.session.add(directory)
         db.session.commit()
 
+    db.session.add(Keywords(1, "test_keyword"))
+    db.session.commit()
     keyword_model = KeywordModel(directory_id=1, value=name)
-    keywords = keyword_model.bulk_generate(n=10)
+    keywords = keyword_model.bulk_generate(n=5)
     for keyword in keywords:
         db.session.add(keyword)
         db.session.commit()

@@ -76,7 +76,7 @@ def user_setting_page():
     if user_data:
         form = UserSettingForm(email=user_data["email"], language=user_data["language"])
     else:
-        abort(400)
+        abort(401)
     if request.method == "GET":
         return render_template("user_setting.html", form=form)
     if request.method == "POST":
@@ -86,4 +86,8 @@ def user_setting_page():
             language = form.language.data
             if update_user(current_user.id, password, email, language):
                 return redirect(url_for("dashboard.dashboard_page"))
-        return redirect(url_for("user.user_setting_page"))
+        else:
+            for _, errors in form.errors.items():
+                for error in errors:
+                    flash(error, category="alert")
+            return redirect(url_for("user.user_setting_page"))

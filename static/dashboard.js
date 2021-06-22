@@ -50,7 +50,7 @@ function addKeyword(id) {
         $.ajax({
             url: "/dashboard/backend",
             type: "post",
-            data: JSON.stringify({ "type": "keyword", "id": id, "keyword": keyword }),
+            data: JSON.stringify({ "type": "keyword", "directory_id": id, "keyword": keyword }),
             dataType: "json",
         })
             .always(function (r) { respond(r); })

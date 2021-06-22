@@ -1,5 +1,5 @@
 from flask_login import login_required, current_user
-from flask import flash, request, render_template, abort, url_for, redirect
+from flask import request, render_template, abort
 from . import dashboard_bp
 from ..news_tools import (
     add_directory,
@@ -28,7 +28,7 @@ def dashboard_backend():
         type = data.get("type", None)
         if type:
             if type == "keyword":
-                directory_id = data.get("id", None)
+                directory_id = data.get("directory_id", None)
                 keyword = data.get("keyword", None)
                 if directory_id and keyword:
                     if add_keyword(directory_id, keyword):
@@ -43,16 +43,16 @@ def dashboard_backend():
         data = request.get_json(force=True)
         type = data.get("type", None)
         if type:
-            if type == "directory":
-                directory_id = data.get("id", None)
-                if directory_id:
-                    if delete_directory(directory_id):
-                        return "OK"
             if type == "keyword":
                 directory_id = data.get("directory_id", None)
                 keyword = data.get("keyword", None)
                 if directory_id and keyword:
                     if delete_keyword(directory_id, keyword):
+                        return "OK"
+            if type == "directory":
+                directory_id = data.get("id", None)
+                if directory_id:
+                    if delete_directory(directory_id):
                         return "OK"
         abort(400)
 

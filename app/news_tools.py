@@ -24,10 +24,16 @@ def get_directories(user_id):
 
 def add_directory(user_id, name):
     try:
-        directory = Directories(user_id, name)
-        db.session.add(directory)
-        db.session.commit()
-        return True
+        if not Directories.query.filter_by(user_id=user_id, name=name).first():
+            # check illegal characters
+            name = name.replace("_", " ")
+            name = name.strip()
+            directory = Directories(user_id, name)
+            db.session.add(directory)
+            db.session.commit()
+            return True
+        else:
+            return False
     except:
         return False
 
@@ -92,7 +98,8 @@ def add_keyword(directory_id, value):
     value = value.replace("_", " ")
     value = value.strip()
     # there cannot be two same keywords in one directory
-    if not Keywords.query.filter_by(directory_id=directory_id, value=value).all():
+    directory_exist = Directories.query.filter_by(ID=directory_id).first()
+    if not Keywords.query.filter_by(directory_id=directory_id, value=value).all() and directory_exist:
         db.session.add(Keywords(directory_id, value))
         db.session.commit()
         return True

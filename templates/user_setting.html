@@ -1,3 +1,5 @@
+{% from 'msg.jinja' import display_msg %}
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,12 +9,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/static/inputs.css">
     <link rel="stylesheet" href="/static/index.css">
+    <link rel="stylesheet" href="/static/messages.css">
     <script src="/static/index.js"></script>
+    <script src="/static/msg.js"></script>
     <title>Setting</title>
 </head>
 
 <body class="form">
     <h1 style="color: white; margin: 0; padding: 20px 10px 0 20px;">User Setting</h1>
+    <div>{{ display_msg(messages) }}</div>
     <form action="/user_setting" , method="POST" style="padding-left: 20px;">
         {{ form.csrf_token }}
         <div class="field">{{ form.password }}</div>

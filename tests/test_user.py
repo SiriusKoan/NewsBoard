@@ -1,4 +1,3 @@
-from werkzeug.wrappers import response
 from tests.helper import TestModel
 
 
@@ -72,6 +71,13 @@ class RegisterPageTest(TestModel):
             "email": "test3@test3.com",
             "language": "en",
         }
+        self.register_data_bad_2 = {
+            "username": "test",
+            "password": "testtest",
+            "repeat_password": "testtest",
+            "email": "test3@test3.com",
+            "language": "en",
+        }
 
     def test_get_with_no_auth(self):
         response = self.get_request()
@@ -89,6 +95,11 @@ class RegisterPageTest(TestModel):
 
     def test_post_bad_too_short_password(self):
         response = self.post_request(self.register_data_bad)
+        self.assertEqual(response.status_code, 302)
+        self.assertTrue(b"register" in response.data)
+
+    def test_post_bad_duplicate_user(self):
+        response = self.post_request(self.register_data_bad_2)
         self.assertEqual(response.status_code, 302)
         self.assertTrue(b"register" in response.data)
 
