@@ -3,7 +3,7 @@ from tests.helper import TestModel
 
 class IndexPageTest(TestModel):
     """
-    Test for `main.index_page`.
+    Test for `main.index_page`
     """
 
     def __init__(self, methodName: str) -> None:
@@ -17,3 +17,4 @@ class IndexPageTest(TestModel):
     def test_get_with_auth(self):
         response = self.get_request(True)
         self.assertEqual(response.status_code, 302)
+        self.assertTrue(b"dashboard" in response.data)

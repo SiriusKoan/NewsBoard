@@ -4,7 +4,7 @@ from flask_login import (
     logout_user,
     login_required,
 )
-from flask import request, render_template, flash, redirect, url_for
+from flask import request, render_template, flash, redirect, url_for, abort
 from ..user_tools import login_auth, register, render_user_data, update_user
 from . import user_bp
 from ..forms import LoginForm, RegisterForm, UserSettingForm
@@ -38,7 +38,7 @@ def login_page():
 @login_required
 def logout_page():
     logout_user()
-    return redirect(url_for("main.index"))
+    return redirect(url_for("main.index_page"))
 
 
 @user_bp.route("/register", methods=["GET", "POST"])
@@ -73,7 +73,10 @@ def register_page():
 @login_required
 def user_setting_page():
     user_data = render_user_data(current_user.id)
-    form = UserSettingForm(email=user_data["email"], language=user_data["language"])
+    if user_data:
+        form = UserSettingForm(email=user_data["email"], language=user_data["language"])
+    else:
+        abort(400)
     if request.method == "GET":
         return render_template("user_setting.html", form=form)
     if request.method == "POST":
