@@ -1,14 +1,14 @@
 from tests.helper import TestModel
 
 
-class IndexPageTest(TestModel):
+class LoginPageTest(TestModel):
     """
-    Test for `main.index_page`.
+    Test for `user.login_page`
     """
 
     def __init__(self, methodName: str) -> None:
         super().__init__(methodName=methodName)
-        self.route = "main.index_page"
+        self.route = "user.login_page"
 
     def test_get_with_no_auth(self):
         response = self.get_request()
@@ -17,3 +17,8 @@ class IndexPageTest(TestModel):
     def test_get_with_auth(self):
         response = self.get_request(True)
         self.assertEqual(response.status_code, 302)
+
+    def test_post(self):
+        response = self.post_request(self.login_data)
+        self.assertEqual(response.status_code, 302)
+        self.assertTrue(b"dashboard" in response.data)

@@ -1,6 +1,40 @@
 from hashlib import sha256
+import unittest
+from flask import url_for
 import RandomUsers as ru
+from app import create_app
 from app.db import db, Users, Directories, Keywords
+
+
+class TestModel(unittest.TestCase):
+    def setUp(self) -> None:
+        self.app = create_app("testing")
+        self.client = self.app.test_client()
+        self.app_context = self.app.test_request_context()
+        self.app_context.push()
+        self.login_data = {"username": "test", "password": "test"}
+        db.drop_all()
+        generate_test_data()
+
+    def tearDown(self) -> None:
+        if self.app_context is not None:
+            self.app_context.pop()
+        db.drop_all()
+
+    def login(self):
+        return self.client.post(url_for("user.login_page"), data=self.login_data)
+
+    def get_request(self, login=False):
+        with self.client:
+            if login:
+                self.login()
+            return self.client.get(url_for(self.route))
+
+    def post_request(self, data, login=False):
+        with self.client:
+            if login:
+                self.login()
+            return self.client.post(url_for(self.route), data=data)
 
 
 class DirectoryModel(ru.UserModel):
@@ -32,7 +66,14 @@ class KeywordModel(ru.UserModel):
 def generate_test_data():
     db.create_all()
 
-    db.session.add(Users(username="test", password=sha256(bytes("test".encode("utf-8"))).hexdigest(), email="test@test.com", lang="en"))
+    db.session.add(
+        Users(
+            username="test",
+            password=sha256(bytes("test".encode("utf-8"))).hexdigest(),
+            email="test@test.com",
+            lang="en",
+        )
+    )
     db.session.commit()
 
     name = ru.Username()
