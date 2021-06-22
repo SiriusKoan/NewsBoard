@@ -9,7 +9,8 @@ class Config:
 class Testing(Config):
     ENV = "TESTING"
     TESTING = True
-    SQLALCHEMY_DATABASE_URI = "sqlite:///data.db"
+    SQLALCHEMY_DATABASE_URI = "sqlite:///data_testing.db"
+    WTF_CSRF_ENABLED = False
 
 
 class Development(Config):
