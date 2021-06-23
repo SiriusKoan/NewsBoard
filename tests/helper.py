@@ -36,7 +36,7 @@ class TestModel(unittest.TestCase):
             return self.client.post(url_for(self.route), data=data)
 
 
-class DirectoryModel(ru.UserModel):
+class DirectoryModel(ru.BasicModel):
     def __init__(self, user_id, name, instance=Directories) -> None:
         self.info = dict()
         self.user_id = user_id
@@ -49,7 +49,7 @@ class DirectoryModel(ru.UserModel):
         return self.instance(**self.info)
 
 
-class KeywordModel(ru.UserModel):
+class KeywordModel(ru.BasicModel):
     def __init__(self, directory_id, value, instance=Keywords) -> None:
         self.info = dict()
         self.directory_id = directory_id
