@@ -10,12 +10,19 @@
     <link rel="stylesheet" href="/static/inputs.css">
     <link rel="stylesheet" href="/static/index.css">
     <link rel="stylesheet" href="/static/messages.css">
+    <link rel="stylesheet" href="/static/nav.css">
+    <link href="https://fonts.googleapis.com/css2?family=Kalam:wght@300&display=swap" rel="stylesheet">
     <script src="/static/index.js"></script>
     <script src="/static/msg.js"></script>
     <title>Setting</title>
 </head>
 
-<body class="form">
+<body class="form" style="font-family: 'Kalam', cursive;">
+    <nav>
+        <span><a href="/dashboard">Dashboard</a></span>
+        <span><a href="/user_setting">User Setting</a></span>
+        <span><a href="/logout">Logout</a></span>
+    </nav>
     <h1 style="color: white; margin: 0; padding: 20px 10px 0 20px;">User Setting</h1>
     <div>{{ display_msg(messages) }}</div>
     <form action="/user_setting" , method="POST" style="padding-left: 20px;">

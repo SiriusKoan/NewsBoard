@@ -21,19 +21,6 @@ a:hover {
     text-decoration: underline;
 }
 
-#operation {
-    background-color: rgba(255, 255, 255, 0.5);
-    z-index: 100;
-    width: 100%;
-    position: sticky;
-    top: 0;
-}
-
-#operation * {
-    display: inline-block;
-    margin: 20px 0 20px 20px;
-}
-
 .directory_container {
     display: flex;
     flex-wrap: wrap;

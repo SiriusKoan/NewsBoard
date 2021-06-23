@@ -8,8 +8,9 @@
     <link rel="shortcut icon" href="/static/icon.png" type="image/x-icon">
     <link rel="stylesheet" href="/static/directory.css">
     <link rel="stylesheet" href="/static/inputs.css">
+    <link rel="stylesheet" href="/static/nav.css">
     <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Kalam&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Kalam:wght@300&display=swap" rel="stylesheet">
     <script src="/static/index.js"></script>
     <script src="/static/dashboard.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
@@ -17,10 +18,11 @@
 </head>
 
 <body>
-    <div id="operation">
-        <a href="/dashboard">Dashboard</a>
-        <button class="add" onclick="addKeyword({{ directory['id'] }})">Add</button>
-    </div>
+    <nav>
+        <span><a href="/dashboard">Dashboard</a></span>
+        <span><a href="/user_setting">User Setting</a></span>
+        <span><a href="/logout">Logout</a></span>
+    </nav>
     <div class="directory_container">
         {% for name in directory["news"].keys() %}
         <div class="directory">
@@ -37,6 +39,11 @@
             {% endfor %}
         </div>
         {% endfor %}
+        <div class="directory">
+            <div class="name_section" onclick="show_hide(this);">
+                <button class="add" onclick="addKeyword({{ directory['id'] }})" style="width: fit-content;">Add New Keyword</button>
+            </div>
+        </div>
     </div>
 </body>
 
