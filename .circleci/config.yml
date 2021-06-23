@@ -14,11 +14,21 @@ jobs:
       - python/install-deps
       - python/save-cache
 
+  test:
+    executor: python/default
+    steps:
+      - checkout
+      - python/install-deps
+      - run:
+            name: Test
+            command: python manage.py test
 
 workflows:
   main:
     jobs:
       - build
+      - test
       - heroku/deploy-via-git:
           requires:
             - build
+            - test
