@@ -21,7 +21,7 @@ jobs:
       - python/install-deps
       - run:
             name: Test
-            command: python manage.py test
+            command: flask test
 
 workflows:
   main:
